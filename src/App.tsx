@@ -7,7 +7,21 @@ const API_TOKEN = "wys_hMWpXdekxcn9Gc8Ioah3azOllzUZ7l3HN9yB";
 
 const App: React.FC = () => {
     const [users, setUsers] = useState<any[]>([]);
-    const [userData, setUserData] = useState({ name: "", email: "" });
+    const [userData, setUserData] = useState({
+        uid: "",
+        name: "",
+        given_name: "",
+        middle_name: "",
+        family_name: "",
+        nickname: "",
+        email: "",
+        phone_number: "",
+        comment: "",
+        picture: "",
+        directory: "",
+        metadata: "{}",
+        tags: "",
+    });
 
     useEffect(() => {
         fetchUsers();
@@ -25,7 +39,7 @@ const App: React.FC = () => {
                 setUsers(response.data);
             } else {
                 console.error("Expected an array but got:", response.data);
-                setUsers([]); // Fallback in case of unexpected response format
+                setUsers([]);
             }
         } catch (error) {
             console.error("Error fetching users", error);
@@ -54,26 +68,125 @@ const App: React.FC = () => {
         }
     };
 
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setUserData({ ...userData, [name]: value });
+    };
+
     return (
         <div className="container">
             <h1 className="title">Weavy User Management</h1>
+
+            {/* User input fields */}
             <input
                 type="text"
-                placeholder="Name"
+                name="uid"
+                placeholder="UID (Unique Identifier)"
+                value={userData.uid}
+                onChange={handleChange}
+                className="input"
+            />
+            <input
+                type="text"
+                name="name"
+                placeholder="Full Name"
                 value={userData.name}
-                onChange={(e) => setUserData({ ...userData, name: e.target.value })}
+                onChange={handleChange}
+                className="input"
+            />
+            <input
+                type="text"
+                name="given_name"
+                placeholder="Given Name"
+                value={userData.given_name}
+                onChange={handleChange}
+                className="input"
+            />
+            <input
+                type="text"
+                name="middle_name"
+                placeholder="Middle Name"
+                value={userData.middle_name}
+                onChange={handleChange}
+                className="input"
+            />
+            <input
+                type="text"
+                name="family_name"
+                placeholder="Family Name"
+                value={userData.family_name}
+                onChange={handleChange}
+                className="input"
+            />
+            <input
+                type="text"
+                name="nickname"
+                placeholder="Nickname"
+                value={userData.nickname}
+                onChange={handleChange}
                 className="input"
             />
             <input
                 type="email"
-                placeholder="Email"
+                name="email"
+                placeholder="Email Address"
                 value={userData.email}
-                onChange={(e) => setUserData({ ...userData, email: e.target.value })}
+                onChange={handleChange}
                 className="input"
             />
+            <input
+                type="text"
+                name="phone_number"
+                placeholder="Phone Number"
+                value={userData.phone_number}
+                onChange={handleChange}
+                className="input"
+            />
+            <input
+                type="text"
+                name="comment"
+                placeholder="Comment"
+                value={userData.comment}
+                onChange={handleChange}
+                className="input"
+            />
+            <input
+                type="text"
+                name="picture"
+                placeholder="Profile Picture URL"
+                value={userData.picture}
+                onChange={handleChange}
+                className="input"
+            />
+            <input
+                type="text"
+                name="directory"
+                placeholder="Directory"
+                value={userData.directory}
+                onChange={handleChange}
+                className="input"
+            />
+            <input
+                type="text"
+                name="metadata"
+                placeholder='Metadata (e.g., {"color": "blue", "size": "XL"})'
+                value={userData.metadata}
+                onChange={handleChange}
+                className="input"
+            />
+            <input
+                type="text"
+                name="tags"
+                placeholder="Tags (comma separated)"
+                value={userData.tags}
+                onChange={handleChange}
+                className="input"
+            />
+
             <button onClick={createUser} className="btn create">
                 Create User
             </button>
+
             <h2 className="subtitle">Users List</h2>
             <ul className="user-list">
                 {users.length > 0 ? (
