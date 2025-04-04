@@ -35,7 +35,16 @@ const App: React.FC = () => {
     }
   };
 
-
+  const deleteUser = async (userId: number) => {
+    try {
+      await axios.delete(`${API_BASE_URL}/${userId}`, {
+        headers: { Authorization: `Bearer ${API_TOKEN}` },
+      });
+      setUsers(users.filter((user) => user.id !== userId));
+    } catch (error) {
+      console.error("Error deleting user", error);
+    }
+  };
 
   return (
       <div className="container">
@@ -58,7 +67,19 @@ const App: React.FC = () => {
           Create User
         </button>
         <h2 className="subtitle">Users List</h2>
-
+        <ul className="user-list">
+          {users.map((user) => (
+              <li key={user.id} className="user-item">
+                {user.name} - {user.email}
+                <button
+                    onClick={() => deleteUser(user.id)}
+                    className="btn delete"
+                >
+                  Delete
+                </button>
+              </li>
+          ))}
+        </ul>
       </div>
   );
 };
