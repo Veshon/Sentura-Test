@@ -24,6 +24,19 @@ const App: React.FC = () => {
     }
   };
 
+  const createUser = async () => {
+    try {
+      const response = await axios.post(API_BASE_URL, userData, {
+        headers: { Authorization: `Bearer ${API_TOKEN}` },
+      });
+      setUsers([...users, response.data]);
+    } catch (error) {
+      console.error("Error creating user", error);
+    }
+  };
+
+
+
   return (
       <div className="container">
         <h1 className="title">Weavy User Management</h1>
@@ -41,6 +54,10 @@ const App: React.FC = () => {
             onChange={(e) => setUserData({ ...userData, email: e.target.value })}
             className="input"
         />
+        <button onClick={createUser} className="btn create">
+          Create User
+        </button>
+        <h2 className="subtitle">Users List</h2>
 
       </div>
   );
