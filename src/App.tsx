@@ -19,10 +19,8 @@ const App: React.FC = () => {
                 headers: { Authorization: `Bearer ${API_TOKEN}` },
             });
 
-            // Log the response to inspect its structure
             console.log("API Response:", response.data);
 
-            // Ensure the response is an array before setting it to state
             if (Array.isArray(response.data)) {
                 setUsers(response.data);
             } else {
