@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { v4 as uuidv4 } from "uuid"; // Import the UUID package
 import "./App.css";
 
 const API_URL = "https://8015b5dbc0724d38882ac90397c27649.weavy.io";
@@ -39,7 +40,7 @@ const App: React.FC = () => {
                 setUsers(response.data);
             } else {
                 console.error("Expected an array but got:", response.data);
-                setUsers([]);
+                setUsers([]); // Fallback in case of unexpected response format
             }
         } catch (error) {
             console.error("Error fetching users", error);
@@ -47,8 +48,10 @@ const App: React.FC = () => {
     };
 
     const createUser = async () => {
+        const newUserData = { ...userData, uid: uuidv4() };
+
         try {
-            const response = await axios.post(API_URL, userData, {
+            const response = await axios.post(API_URL, newUserData, {
                 headers: { Authorization: `Bearer ${API_TOKEN}` },
             });
             setUsers([...users, response.data]);
@@ -78,14 +81,6 @@ const App: React.FC = () => {
             <h1 className="title">Weavy User Management</h1>
 
             {/* User input fields */}
-            <input
-                type="text"
-                name="uid"
-                placeholder="UID (Unique Identifier)"
-                value={userData.uid}
-                onChange={handleChange}
-                className="input"
-            />
             <input
                 type="text"
                 name="name"
