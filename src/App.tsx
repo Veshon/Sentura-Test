@@ -40,7 +40,7 @@ const App: React.FC = () => {
                 setUsers(response.data);
             } else {
                 console.error("Expected an array but got:", response.data);
-                setUsers([]); // Fallback in case of unexpected response format
+                setUsers([]);
             }
         } catch (error) {
             console.error("Error fetching users", error);
@@ -80,7 +80,6 @@ const App: React.FC = () => {
         <div className="container">
             <h1 className="title">Weavy User Management</h1>
 
-            {/* User input fields */}
             <input
                 type="text"
                 name="name"
