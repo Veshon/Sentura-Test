@@ -41,23 +41,7 @@ const App: React.FC = () => {
             onChange={(e) => setUserData({ ...userData, email: e.target.value })}
             className="input"
         />
-        <button onClick={createUser} className="btn create">
-          Create User
-        </button>
-        <h2 className="subtitle">Users List</h2>
-        <ul className="user-list">
-          {users.map((user) => (
-              <li key={user.id} className="user-item">
-                {user.name} - {user.email}
-                <button
-                    onClick={() => deleteUser(user.id)}
-                    className="btn delete"
-                >
-                  Delete
-                </button>
-              </li>
-          ))}
-        </ul>
+
       </div>
   );
 };
